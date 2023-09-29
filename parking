@@ -1,0 +1,62 @@
+
+class ParkingSpace:
+    def __init__(self, id):
+        self.id = id
+        self.is_occupied = False
+
+class ParkingLot:
+    def __init__(self, num_spaces):
+        self.spaces = [ParkingSpace(i) for i in range(1, num_spaces + 1)]
+
+    def occupy_space(self, space_id):
+        space = self.get_space_by_id(space_id)
+        if space:
+            if not space.is_occupied:
+                space.is_occupied = True
+                return f"Parking space {space_id} is now occupied."
+            else:
+                return f"Parking space {space_id} is already occupied."
+        else:
+            return f"Invalid space ID: {space_id}"
+
+    def vacate_space(self, space_id):
+        space = self.get_space_by_id(space_id)
+        if space:
+            if space.is_occupied:
+                space.is_occupied = False
+                return f"Parking space {space_id} is now vacant."
+            else:
+                return f"Parking space {space_id} is already vacant."
+        else:
+            return f"Invalid space ID: {space_id}"
+
+    def get_space_by_id(self, space_id):
+        for space in self.spaces:
+            if space.id == space_id:
+                return space
+        return None
+
+def main():
+    num_spaces = 10  # Change this to match the number of parking spaces in your lot
+    parking_lot = ParkingLot(num_spaces)
+
+    while True:
+        print("\nSmart Parking System")
+        print("1. Occupy Parking Space")
+        print("2. Vacate Parking Space")
+        print("3. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            space_id = int(input("Enter space ID to occupy: "))
+            print(parking_lot.occupy_space(space_id))
+        elif choice == "2":
+            space_id = int(input("Enter space ID to vacate: "))
+            print(parking_lot.vacate_space(space_id))
+        elif choice == "3":
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
